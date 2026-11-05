@@ -67,7 +67,7 @@ export default async function Navbar() {
           </Link>
 
           <button className="btn btn-xs bg-green-700 text-white sm:btn-sm">
-            সাইন আউট
+            সাইন আপ 
           </button>
         </div>
       </div>
