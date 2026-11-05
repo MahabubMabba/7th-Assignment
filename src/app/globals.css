@@ -2,69 +2,42 @@
 @plugin "daisyui";
 
 .site-footer {
-  background: #e9f2e9;
-  border-top: 1px solid #dce8dc;
-  color: #526057;
+  background: #f5f8f5;
+  border-top: 1px solid #e3e9e3;
   margin-top: 40px;
-  padding: 24px 16px;
-  text-align: center;
+  padding: 18px 20px;
 }
 
-.footer-name {
-  color: #086d37;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.footer-links {
+.site-footer-inner {
+  align-items: center;
   display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin: 14px 0;
-}
-
-.footer-links a:hover {
-  color: #086d37;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 auto;
+  max-width: 1150px;
 }
 
 .site-footer p {
-  font-size: 14px;
+  font-size: 13px;
+  line-height: 1.6;
   margin: 0;
 }
 
-.not-found {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 55vh;
-  padding: 32px 16px;
-  text-align: center;
+.footer-brand {
+  color: #27372d;
+  font-weight: 700;
 }
 
-.not-found-code {
-  color: #118747;
-  font-size: 72px;
-  font-weight: bold;
-  margin: 0;
+.footer-brand span,
+.footer-disclaimer {
+  color: #778078;
+  font-weight: 400;
 }
 
-.not-found h1 {
-  margin: 8px 0;
-}
-
-.not-found p {
-  color: #69766d;
-}
-
-.not-found-button {
-  background: #118747;
-  border-radius: 8px;
-  color: white;
-  margin-top: 12px;
-  padding: 10px 16px;
-}
-
-.not-found-button:hover {
-  background: #086d37;
+@media (max-width: 600px) {
+  .site-footer-inner {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 
@@ -19,6 +19,14 @@ type Product = {
 };
 
 export default function CategoryPage() {
+  return (
+    <Suspense fallback={<p className="py-10 text-center">লোড হচ্ছে...</p>}>
+      <CategoryContent />
+    </Suspense>
+  );
+}
+
+function CategoryContent() {
   const params = useParams<{ slug: string | string[] }>();
   const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
 
@@ -85,7 +93,9 @@ export default function CategoryPage() {
   if (products.length === 0) {
     return (
       <main className="mx-auto max-w-6xl px-4 py-16 text-center">
-        <h1 className="mb-3 text-2xl font-bold">এই ক্যাটাগরিতে পণ্য নেই</h1>
+        <h1 className="mb-3 text-2xl font-bold">
+          এই ক্যাটাগরিতে পণ্য নেই
+        </h1>
 
         <Link href="/" className="btn btn-success text-white">
           হোম পেজে ফিরে যান
