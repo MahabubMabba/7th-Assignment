@@ -1,8 +1,11 @@
-// Banner.tsx
-import Image from "next/image";
-import Link from "next/link";
+// src/components/Banner.tsx
 
-export default function Banner() {
+import Image from "next/image";
+import { connection } from "next/server";
+
+export default async function Banner() {
+  await connection();
+
   const today = new Date().toLocaleDateString("bn-BD", {
     weekday: "long",
     day: "numeric",
@@ -26,9 +29,9 @@ export default function Banner() {
           চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম ও মসলার দাম এক জায়গায় দেখুন।
         </p>
 
-        <Link href="#sob-panno" className="btn btn-success text-white">
+        <a href="#sob-panno" className="btn btn-success text-white">
           সব পণ্য দেখুন
-        </Link>
+        </a>
       </div>
 
       <div className="flex justify-center">

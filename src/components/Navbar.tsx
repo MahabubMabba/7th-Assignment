@@ -9,23 +9,27 @@ type Category = {
 };
 
 export default async function Navbar() {
-  const response = await fetch(
-    "https://openapi.programming-hero.com/api/bazardor/categories",
-    { cache: "no-store" }
-  );
-
-  const data = await response.json();
-
   let categories: Category[] = [];
 
-  if (Array.isArray(data)) {
-    categories = data;
-  } else if (Array.isArray(data.categories)) {
-    categories = data.categories;
-  } else if (Array.isArray(data.data)) {
-    categories = data.data;
-  } else if (Array.isArray(data.data?.categories)) {
-    categories = data.data.categories;
+  try {
+    const response = await fetch(
+      "https://openapi.programming-hero.com/api/bazardor/categories",
+      { cache: "no-store" }
+    );
+
+    const data = await response.json();
+
+    if (Array.isArray(data)) {
+      categories = data;
+    } else if (Array.isArray(data.categories)) {
+      categories = data.categories;
+    } else if (Array.isArray(data.data)) {
+      categories = data.data;
+    } else if (Array.isArray(data.data?.categories)) {
+      categories = data.data.categories;
+    }
+  } catch (error) {
+    console.log("ক্যাটাগরির তথ্য লোড হয়নি", error);
   }
 
   const today = new Date().toLocaleDateString("bn-BD", {
@@ -38,23 +42,23 @@ export default async function Navbar() {
 
   return (
     <header className="bg-white shadow-sm">
-      <div className="navbar mx-auto max-w-6xl px-4">
-        <div className="navbar-start">
-          <Link href="/" className="flex items-center gap-2">
-            <img
-              src="/logo-icon.png"
-              alt="বাজার দর"
-              className="h-10 w-10 object-contain"
-            />
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-3 py-3 sm:px-4">
+        <Link href="/" className="flex items-center gap-2">
+          <img
+            src="/logo-icon.png"
+            alt="বাজার দর"
+            className="h-9 w-9 shrink-0 object-contain sm:h-10 sm:w-10"
+          />
 
-            <div>
-              <p className="font-bold text-green-700">বাজার দর</p>
-              <p className="text-xs text-gray-500">{today}</p>
-            </div>
-          </Link>
-        </div>
+          <div>
+            <p className="font-bold text-green-700">বাজার দর</p>
+            <p className="whitespace-nowrap text-[10px] text-gray-500 sm:text-xs">
+              {today}
+            </p>
+          </div>
+        </Link>
 
-        <div className="navbar-end gap-2">
+        <div className="ml-auto flex gap-2">
           <Link
             href="/signin"
             className="btn btn-xs border-green-700 text-green-700 sm:btn-sm"
@@ -69,15 +73,21 @@ export default async function Navbar() {
       </div>
 
       <nav className="border-t">
-        <ul className="menu menu-horizontal mx-auto flex-nowrap gap-2 overflow-x-auto px-4">
-          {categories.map((category) => (
-            <li key={category.slug}>
-              <Link href={`/category/${category.slug}`}>
-                {category.icon} {category.nameBn}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <div className="mx-auto max-w-6xl overflow-x-auto px-3 sm:px-4">
+          <ul className="menu menu-horizontal min-w-max flex-nowrap gap-1">
+            {categories.map((category) => (
+              <li key={category.slug}>
+                <Link
+                  href={`/category/${category.slug}`}
+                  className="whitespace-nowrap"
+                >
+                  {category.icon && <span>{category.icon}</span>}
+                  {category.nameBn}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </nav>
     </header>
   );

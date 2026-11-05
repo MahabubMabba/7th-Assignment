@@ -4,8 +4,6 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Marquee from "@/components/Marquee";
 import { Suspense } from "react";
-import MarqueeText from "react-marquee-text";
-
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
