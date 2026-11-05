@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Header";
-import Header from "@/components/Header";
+import Navbar from "@/components/Navbar";
+import Marquee from "@/components/Marquee";
+import { Suspense } from "react";
+import MarqueeText from "react-marquee-text";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,13 +29,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       data-theme="light"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <Header>
-        </Header>
-        <main>
-          {children}
-        </main>
-        </body>
+      <body className="flex min-h-screen flex-col">
+  <Suspense fallback={<div>লোড হচ্ছে...</div>}>
+    <Navbar />
+  </Suspense>
+
+  <Suspense fallback={<div>দাম লোড হচ্ছে...</div>}>
+    <Marquee />
+  </Suspense>
+
+  <main className="flex-1">{children}</main>
+</body>
     </html>
   );
 }
