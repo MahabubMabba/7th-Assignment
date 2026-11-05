@@ -19,7 +19,8 @@ type Product = {
 };
 
 export default function CategoryPage() {
-  const { slug } = useParams<{ slug: string }>();
+  const params = useParams<{ slug: string | string[] }>();
+  const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
 
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -31,7 +32,8 @@ export default function CategoryPage() {
 
       try {
         const response = await fetch(
-          `https://openapi.programming-hero.com/api/bazardor/products?category=${slug}`
+          `https://openapi.programming-hero.com/api/bazardor/products?category=${encodeURIComponent(slug)}`,
+          { cache: "no-store" }
         );
 
         const data = await response.json();

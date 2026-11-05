@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Marquee from "@/components/Marquee";
 import { Suspense } from "react";
+import ToastProvider from "@/components/ToastProvider"; 
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,6 +38,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   </Suspense>
 
   <main className="flex-1">{children}</main>
+
+<ToastProvider />
 </body>
     </html>
   );
