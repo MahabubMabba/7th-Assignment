@@ -66,7 +66,7 @@ export default function Marquee() {
 
   return (
     <div className="border-y bg-gray-50 py-3">
-      <MarqueeText direction="left" duration={10}>
+      <MarqueeText direction="right" duration={10}>
         {products.map((product) => {
           const isUp = product.change.dir === "up";
           const isDown = product.change.dir === "down";

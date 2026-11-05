@@ -14,12 +14,26 @@ export default async function Navbar() {
     { cache: "no-store" }
   );
 
-  const categories: Category[] = await response.json();
+  const data = await response.json();
 
-  const time = new Date().toLocaleTimeString("bn-BD", {
+  let categories: Category[] = [];
+
+  if (Array.isArray(data)) {
+    categories = data;
+  } else if (Array.isArray(data.categories)) {
+    categories = data.categories;
+  } else if (Array.isArray(data.data)) {
+    categories = data.data;
+  } else if (Array.isArray(data.data?.categories)) {
+    categories = data.data.categories;
+  }
+
+  const today = new Date().toLocaleDateString("bn-BD", {
     timeZone: "Asia/Dhaka",
-    hour: "2-digit",
-    minute: "2-digit",
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
   });
 
   return (
@@ -28,15 +42,15 @@ export default async function Navbar() {
         <div className="navbar-start">
           <Link href="/" className="flex items-center gap-2">
             <img
-              src="/bazar-hero.png"
+              src="/logo-icon.png"
               alt="বাজার দর"
               className="h-10 w-10 object-contain"
             />
 
-            <span>
-              <span className="block font-bold text-green-700">বাজার দর</span>
-              <span className="block text-xs text-gray-500">🕒 {time}</span>
-            </span>
+            <div>
+              <p className="font-bold text-green-700">বাজার দর</p>
+              <p className="text-xs text-gray-500">{today}</p>
+            </div>
           </Link>
         </div>
 
@@ -55,20 +69,15 @@ export default async function Navbar() {
       </div>
 
       <nav className="border-t">
-        <div className="mx-auto max-w-6xl overflow-x-auto px-4">
-          <ul className="menu menu-horizontal flex-nowrap gap-2">
-            {categories.map((category) => (
-              <li key={category.slug}>
-                <Link
-                  href={`/category/${category.slug}`}
-                  className="whitespace-nowrap"
-                >
-                  {category.icon} {category.nameBn}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <ul className="menu menu-horizontal mx-auto flex-nowrap gap-2 overflow-x-auto px-4">
+          {categories.map((category) => (
+            <li key={category.slug}>
+              <Link href={`/category/${category.slug}`}>
+                {category.icon} {category.nameBn}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </nav>
     </header>
   );
